@@ -18,8 +18,18 @@ public class PersonController {
     }
 
     @GetMapping("/{personId}")
-    public PersonDto findPerson(@PathVariable String personId) throws BadRequestException {
+    public PersonDto findPerson(@PathVariable Integer personId) {
         return personService.findPerson(personId);
+    }
+
+    @GetMapping("/city/{city}")
+    public Iterable<PersonDto> findByCity(@PathVariable String city) {
+        return personService.findByCity(city);
+    }
+
+    @GetMapping("/ages/{minAge}/{maxAge}")
+    public Iterable<PersonDto> findByAges(@PathVariable Integer minAge, @PathVariable Integer maxAge) {
+        return personService.findByAges(minAge, maxAge);
     }
 
 }

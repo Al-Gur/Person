@@ -9,6 +9,11 @@ import telran.java57.springdatajpa.person.dto.PersonDto;
 import telran.java57.springdatajpa.person.dto.exceptions.PersonNotFoundException;
 import telran.java57.springdatajpa.person.model.Person;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class PersonServiceImpl implements PersonService{
@@ -25,16 +30,28 @@ public class PersonServiceImpl implements PersonService{
     }
 
     @Override
-    public PersonDto findPerson(String personId) throws BadRequestException {
-        Integer id;
-        try {
-             id = Integer.valueOf(personId);
-        }
-        catch (Exception e){
-            throw new BadRequestException();
-        }
-        Person person = personRepository.findById(id)
+    public PersonDto findPerson(Integer personId) {
+        Person person = personRepository.findById(personId)
                 .orElseThrow(PersonNotFoundException::new);
         return modelMapper.map(person, PersonDto.class);
+    }
+
+    @Override
+    public Iterable<PersonDto> findByCity(String city) {
+        return ((Collection<Person>) personRepository.findPersonByAddress_City_IgnoreCase(city))
+                .stream()
+                .map(person -> modelMapper.map(person, PersonDto.class))
+                .toList();
+    }
+
+    @Override
+    public Iterable<PersonDto> findByAges(Integer minAge, Integer maxAge) {
+        LocalDate now = LocalDate.now();
+        LocalDate minBirthDate = now.minusYears(maxAge);
+        LocalDate maxBirthDate = now.minusYears(minAge);
+        return ((Collection<Person>) personRepository.findPersonByBirthDateBetween(minBirthDate, maxBirthDate))
+                .stream()
+                .map(person -> modelMapper.map(person, PersonDto.class))
+                .toList();
     }
 }

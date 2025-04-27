@@ -6,5 +6,9 @@ import telran.java57.springdatajpa.person.dto.PersonDto;
 public interface PersonService {
     boolean addPerson(PersonDto personDto);
 
-    PersonDto findPerson(String personId) throws BadRequestException;
+    PersonDto findPerson(Integer personId);
+
+    Iterable<PersonDto> findByCity(String city);
+
+    Iterable<PersonDto> findByAges(Integer minAge, Integer maxAge);
 }
