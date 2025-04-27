@@ -32,4 +32,9 @@ public class PersonController {
         return personService.findByAges(minAge, maxAge);
     }
 
+    @PutMapping("/{personId}/name/{newName}")
+    public PersonDto updateName (@PathVariable Integer personId, @PathVariable String newName) {
+        return personService.updateName(personId, newName);
+    }
+
 }

@@ -54,4 +54,13 @@ public class PersonServiceImpl implements PersonService{
                 .map(person -> modelMapper.map(person, PersonDto.class))
                 .toList();
     }
+
+    @Override
+    public PersonDto updateName(Integer personId, String newName) {
+        Person person = personRepository.findById(personId)
+                .orElseThrow(PersonNotFoundException::new);
+        person.setName(newName);
+        personRepository.save(person);
+        return modelMapper.map(person, PersonDto.class);
+    }
 }
