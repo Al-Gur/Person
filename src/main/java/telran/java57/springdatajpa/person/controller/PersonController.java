@@ -37,4 +37,8 @@ public class PersonController {
         return personService.updateName(personId, newName);
     }
 
+    @GetMapping("/name/{name}")
+    public Iterable<PersonDto> findByName(@PathVariable String name) {
+        return personService.findByName(name);
+    }
 }

@@ -63,4 +63,12 @@ public class PersonServiceImpl implements PersonService{
         personRepository.save(person);
         return modelMapper.map(person, PersonDto.class);
     }
+
+    @Override
+    public Iterable<PersonDto> findByName(String name) {
+            return ((Collection<Person>) personRepository.findPersonByName_IgnoreCase(name))
+                    .stream()
+                    .map(person -> modelMapper.map(person, PersonDto.class))
+                    .toList();
+        }
 }

@@ -13,4 +13,6 @@ public interface PersonService {
     Iterable<PersonDto> findByAges(Integer minAge, Integer maxAge);
 
     PersonDto updateName(Integer personId, String newName);
+
+    Iterable<PersonDto> findByName(String city);
 }

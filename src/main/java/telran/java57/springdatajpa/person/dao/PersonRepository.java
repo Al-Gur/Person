@@ -8,5 +8,8 @@ import java.util.stream.Stream;
 
 public interface PersonRepository extends JpaRepository<Person, Integer> {
     Iterable<Person> findPersonByAddress_City_IgnoreCase(String city);
+
     Iterable<Person> findPersonByBirthDateBetween(LocalDate date1, LocalDate date2);
+
+    Iterable<Person> findPersonByName_IgnoreCase(String city);
 }
